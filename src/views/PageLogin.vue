@@ -3,7 +3,7 @@
     <div style="margin-bottom: 20px">
       <img style="width: 200px" src="@/assets/logo.png" alt="" />
     </div>
-    <input class="form_el" type="password" name="name" placeholder="PASSWORD" maxlength="6" pattern="^[0-9]+$" v-model="this.password" />
+    <input class="form_el pw_input" type="password" inputmode="numeric" placeholder="PASSWORD" maxlength="6" pattern="^[0-9]+$" v-model="this.password" @input="maxLengthCheck" />
     <button class="form_el login_btn" type="submit">LOGIN</button>
   </form>
 </template>
@@ -19,6 +19,13 @@ export default {
     };
   },
   methods: {
+    maxLengthCheck() {
+      const object = event.target;
+      if (object.value.length > object.maxLength) {
+        object.value = object.value.slice(0, object.maxLength);
+      }
+    },
+
     onSubmit() {
       console.log(event);
       const auth = getAuth();
@@ -81,7 +88,14 @@ $FORM_EL_HEI: 55px;
     }
   }
 
+  .pw_input {
+    width: 300px;
+    margin: 0 auto;
+  }
+
   .login_btn {
+    width: 300px;
+    margin: 0 auto;
     background-color: gold;
     font-weight: 700;
   }
