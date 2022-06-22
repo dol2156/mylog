@@ -4,9 +4,10 @@
       <option value="webtoon">webtoon</option>
       <option value="webtoon_19">webtoon_19</option>
     </select>
+    <input class="search_inp" type="text" @input="onSearchInput" />
   </header>
   <ul class="webtoon_list">
-    <li :ref="setitemRef" v-for="(item, idx) in webtoon_list" :key="item.id" :data-idx="idx">
+    <li v-bind:class="{ hidden: item.visible === false }" :ref="setitemRef" v-for="(item, idx) in webtoon_list" :key="item.id" :data-idx="idx">
       <button class="삭제" type="button" @click="onRemoveWebToonItem(item)">삭제</button>
       <div class="제목">
         <div class="text_0">{{ item.id }}</div>
@@ -78,6 +79,7 @@ export default {
           response.forEach((doc) => {
             let data = doc.data();
             data.id = doc.id;
+            data.visible = true;
             arr.push(data);
             //console.log(`${doc.id} => ${doc.data()}`);
           });
@@ -142,6 +144,18 @@ export default {
       this.readWebToonItem();
     },
 
+    onSearchInput() {
+      const searchQueryString = event.target.value;
+
+      this.webtoon_list.filter((el) => {
+        if (el.제목.toLowerCase().indexOf(searchQueryString) > -1) {
+          el.visible = true;
+        } else {
+          el.visible = false;
+        }
+      });
+    },
+
     onCreateWebToonItem() {
       const title = this.create_webtoon_title.trim();
       this.createWebToonItem(title);
@@ -196,16 +210,20 @@ export default {
 $FORM_EL_SIZE: 50px;
 
 header {
-  display: flex;
-  align-items: center;
   margin-bottom: 10px;
-  background-color: #333;
-
   .collection_select {
+    width: 100%;
     height: $FORM_EL_SIZE;
     flex-grow: 1;
     padding: 0 10px;
     border: 1px solid #ddd;
+  }
+
+  .search_inp {
+    margin-top: 10px;
+    width: 100%;
+    height: $FORM_EL_SIZE;
+    padding: 0 10px;
   }
 }
 
