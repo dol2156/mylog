@@ -202,7 +202,6 @@ $FORM_EL_SIZE: 50px;
     display: flex;
     align-items: center;
     flex-wrap: nowrap;
-    gap: 5px;
     background-color: white;
     height: $FORM_EL_SIZE;
 
@@ -222,6 +221,7 @@ $FORM_EL_SIZE: 50px;
     }
 
     > .제목 {
+      padding: 0 5px;
       width: calc(100% - 50px * 3);
       display: flex;
       align-items: flex-start;
