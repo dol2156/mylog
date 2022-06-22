@@ -1,10 +1,9 @@
 <template>
-  <router-view></router-view>
+  <div>PageNotFound : {{ message }}</div>
 </template>
 <script>
-
 export default {
-  name : "App",
+  name : "PageNotFound",
   data() {
     return {
       message : "Hello Vue",
@@ -12,7 +11,5 @@ export default {
   },
 }
 </script>
-<style lang="scss">
-*{ box-sizing:border-box; }
-button{ cursor:pointer; }
+<style>
 </style>
