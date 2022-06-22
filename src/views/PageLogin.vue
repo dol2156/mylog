@@ -1,5 +1,8 @@
 <template>
   <form id="myForm" @submit.prevent="onSubmit">
+    <div style="margin-bottom: 20px">
+      <img style="width: 200px" src="@/assets/logo.png" alt="" />
+    </div>
     <input class="form_el" type="password" name="name" placeholder="PASSWORD" maxlength="6" pattern="^[0-9]+$" v-model="this.password" />
     <button class="form_el login_btn" type="submit">LOGIN</button>
   </form>
