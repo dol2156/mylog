@@ -41,6 +41,8 @@ export default {
     };
   },
   created() {
+    console.log("created");
+    console.log(this.$route.params.collection);
     if (this.$route.params.collection) {
       this.collection_name = this.$route.params.collection;
     }
@@ -134,7 +136,7 @@ export default {
     onCollectionChange() {
       console.log(this.collection_name);
       this.$router.push({
-        name: "메인",
+        name: "메인:collection",
         params: { collection: this.collection_name },
       });
       this.readWebToonItem();

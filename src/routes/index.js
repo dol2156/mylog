@@ -9,8 +9,13 @@ const routes = [
     redirect: "/main",// 리다이렉트 필요시 작성
   },
   {
-    path: "/main/:collection",
+    path: "/main",
     name: "메인",
+    component: MainPage,
+  },
+  {
+    path: "/main/:collection",
+    name: "메인:collection",
     component: MainPage,
   },
   {
