@@ -232,16 +232,18 @@ $FORM_EL_SIZE:50px;
     }
     
     > .제목{
-      width:100%;
+      width:calc(100% - 50px * 3);
       display:flex; align-items:flex-start; flex-direction:column; justify-content:center;
       
       > .text_0{
         color:#999999; font-size:12px;
+        width:100%; text-overflow:ellipsis; white-space:nowrap; overflow:hidden;
       }
       
       > .text_1{
         margin-top:3px;
         color:#333333; font-size:14px;
+        width:100%; text-overflow:ellipsis; white-space:nowrap; overflow:hidden;
       }
     }
     
