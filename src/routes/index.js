@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory } from "vue-router";
 
 import PageMain from "@/views/PageMain";
 import PageLogin from "@/views/PageLogin";
+import PageJoin from "@/views/PageJoin";
 import PageAddKey from "@/views/PageAddKey";
 
 const routes = [
@@ -23,6 +24,11 @@ const routes = [
     path: "/login",
     name: "로그인",
     component: PageLogin,
+  },
+  {
+    path: "/join",
+    name: "회원가입",
+    component: PageJoin,
   },
   {
     path: "/addKey",

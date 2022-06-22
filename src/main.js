@@ -4,6 +4,7 @@ import App from './App.vue'
 import router from '@/routes/index';
 import { initializeApp } from "firebase/app";
 import VueCookies from "vue-cookies";
+import LoginCheck from "@/module/LoginCheck";
 
 const firebaseConfig = {
   apiKey: "AIzaSyARebWmpXUwkBpidtlVaYpWRPCv-fUzOYw",
@@ -19,4 +20,5 @@ app.use(router);
 app.use(VueCookies, { expire: '7d' });
 // Initialize Firebase
 app.config.globalProperties.$_Firebase = initializeApp(firebaseConfig); // 전역 설정
+app.config.globalProperties.$_LoginCheck = LoginCheck; // 전역 설정
 app.mount('#app');
