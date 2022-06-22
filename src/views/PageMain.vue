@@ -4,7 +4,7 @@
       <option value="webtoon">webtoon</option>
       <option value="webtoon_19">webtoon_19</option>
     </select>
-    <input class="search_inp" type="text" @input="onSearchInput" />
+    <input class="search_inp" type="search" placeholder="search..." @input="onSearchInput" />
   </header>
   <ul class="webtoon_list">
     <li v-bind:class="{ hidden: item.visible === false }" :ref="setitemRef" v-for="(item, idx) in webtoon_list" :key="item.id" :data-idx="idx">
