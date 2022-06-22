@@ -29,16 +29,15 @@ export default {
     onSubmit() {
       console.log(event);
       const auth = getAuth();
-      console.log(this.password);
       signInWithEmailAndPassword(auth, "dol2156@gmail.com", this.password)
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
           const email = user.email;
-          const accessToken = user.accessToken;
+          //const accessToken = user.accessToken;
           if (email === "dol2156@gmail.com") {
             // 로그인 성공
-            this.$cookies.set("user", accessToken, "7d");
+            this.$cookies.set("user_id", email, "7d");
             this.$router.push("/main");
           }
         })

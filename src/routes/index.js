@@ -1,7 +1,8 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 
-import LoginPage from "@/views/PageLogin";
-import MainPage from "@/views/PageMain";
+import PageMain from "@/views/PageMain";
+import PageLogin from "@/views/PageLogin";
+import PageAddKey from "@/views/PageAddKey";
 
 const routes = [
   {
@@ -11,17 +12,22 @@ const routes = [
   {
     path: "/main",
     name: "메인",
-    component: MainPage,
+    component: PageMain,
   },
   {
-    path: "/main/:collection",
-    name: "메인:collection",
-    component: MainPage,
+    path: "/main/:key",
+    name: "메인:key",
+    component: PageMain,
   },
   {
     path: "/login",
     name: "로그인",
-    component: LoginPage,
+    component: PageLogin,
+  },
+  {
+    path: "/addKey",
+    name: "키추가",
+    component: PageAddKey,
   },
   // {
   //   path: "/404",

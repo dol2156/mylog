@@ -9,6 +9,12 @@ export default {
       message: "Hello Vue",
     };
   },
+  created() {
+    // 로그인 체크
+    const user_id = this.$cookies.get("user_id");
+    if (!user_id) this.$router.push("/login");
+    console.log("user_id", user_id);
+  },
 };
 </script>
 <style lang="scss">
