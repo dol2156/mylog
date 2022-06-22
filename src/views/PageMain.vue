@@ -1,8 +1,10 @@
 <template>
-  <div class="create_webtoon_item_box">
-    <input type="text" placeholder="웹툰 제목 입력" v-model="this.create_webtoon_title" @keyup.enter="onCreateWebToonItem" />
-    <button class="create_btn" type="button" @click="onCreateWebToonItem">추가</button>
-  </div>
+  <header>
+    <select class="collection_select" @change="onCollectionChange" v-model="this.collection_name">
+      <option value="webtoon">webtoon</option>
+      <option value="webtoon_19">webtoon_19</option>
+    </select>
+  </header>
   <ul class="webtoon_list">
     <li :ref="setitemRef" v-for="(item, idx) in webtoon_list" :key="item.id" :data-idx="idx">
       <button class="삭제" type="button" @click="onRemoveWebToonItem(item)">삭제</button>
@@ -14,13 +16,18 @@
       <button class="저장" type="button" @click="onSaveClick(item)">저장</button>
     </li>
   </ul>
+  <footer>
+    <div class="create_webtoon_item_box">
+      <input type="text" placeholder="웹툰 제목 입력" v-model="this.create_webtoon_title" @keyup.enter="onCreateWebToonItem" />
+      <button class="create_btn" type="button" @click="onCreateWebToonItem">추가</button>
+    </div>
+  </footer>
 </template>
 <script>
 import { getFirestore } from "firebase/firestore";
 import { collection, doc, getDocs, addDoc, updateDoc, deleteDoc } from "firebase/firestore";
 
 let app, db;
-let collectionName = "webtoon";
 
 export default {
   name: "PageMain",
@@ -30,10 +37,13 @@ export default {
       webtoon_list: [],
       create_webtoon_title: "",
       itemRefs: [],
+      collection_name: "webtoon",
     };
   },
   created() {
-    console.log("created");
+    if (this.$route.params.collection) {
+      this.collection_name = this.$route.params.collection;
+    }
 
     // 로그인 체크
     const user = this.$cookies.get("user");
@@ -58,7 +68,7 @@ export default {
     },
 
     readWebToonItem() {
-      getDocs(collection(db, collectionName))
+      getDocs(collection(db, this.collection_name))
         .then((response) => {
           // success
           // console.log(response);
@@ -87,7 +97,7 @@ export default {
     },
 
     createWebToonItem(제목) {
-      addDoc(collection(db, collectionName), this.makeWebToonObj(제목, 0))
+      addDoc(collection(db, this.collection_name), this.makeWebToonObj(제목, 0))
         .then((response) => {
           // success
           console.log(response);
@@ -105,7 +115,7 @@ export default {
     updateWebToonItem(item, callback) {
       const id = item.id;
       const 회차 = item.회차;
-      const ref = doc(db, collectionName, id);
+      const ref = doc(db, this.collection_name, id);
       updateDoc(ref, {
         회차,
       })
@@ -121,6 +131,15 @@ export default {
           // complete
         });
     },
+    onCollectionChange() {
+      console.log(this.collection_name);
+      this.$router.push({
+        name: "메인",
+        params: { collection: this.collection_name },
+      });
+      this.readWebToonItem();
+    },
+
     onCreateWebToonItem() {
       const title = this.create_webtoon_title.trim();
       this.createWebToonItem(title);
@@ -130,7 +149,7 @@ export default {
 
       const id = item.id;
       // eslint-disable-next-line no-unreachable
-      const ref = doc(db, collectionName, id);
+      const ref = doc(db, this.collection_name, id);
       deleteDoc(ref)
         .then(() => {
           // success
@@ -155,7 +174,7 @@ export default {
       });
 
       /*
-      const ref = doc(db, collectionName, id);
+      const ref = doc(db, this.collection_name, id);
       setDoc(ref, this.makeWebToonObj("title", "number"))
         .then(() => {
         })
@@ -173,30 +192,22 @@ export default {
 </script>
 <style lang="scss" scoped>
 $FORM_EL_SIZE: 50px;
-.create_webtoon_item_box {
+
+header {
   display: flex;
-  flex-wrap: nowrap;
   align-items: center;
+  margin-bottom: 10px;
+  background-color: #333;
 
-  > input {
-    display: block;
-    font-size: 16px;
-    width: 100%;
+  .collection_select {
     height: $FORM_EL_SIZE;
+    flex-grow: 1;
     padding: 0 10px;
-  }
-
-  > .create_btn {
-    min-width: $FORM_EL_SIZE;
-    width: $FORM_EL_SIZE;
-    height: $FORM_EL_SIZE;
-    background-color: green;
-    color: white;
+    border: 1px solid #ddd;
   }
 }
-.webtoon_list {
-  margin-top: 20px;
 
+.webtoon_list {
   > li {
     border: 1px solid #dddddd;
     display: flex;
@@ -269,6 +280,38 @@ $FORM_EL_SIZE: 50px;
         background-color: black;
         opacity: 0.2;
       }
+    }
+  }
+}
+
+footer {
+  height: 100px;
+  .create_webtoon_item_box {
+    padding: 10px;
+    background-color: #333;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+
+    > input {
+      display: block;
+      font-size: 16px;
+      width: 100%;
+      height: $FORM_EL_SIZE;
+      padding: 0 10px;
+    }
+
+    > .create_btn {
+      min-width: $FORM_EL_SIZE;
+      width: $FORM_EL_SIZE;
+      height: $FORM_EL_SIZE;
+      background-color: green;
+      color: white;
     }
   }
 }

@@ -19,7 +19,7 @@ body {
   background-color: #ffffd4;
 }
 #app {
-  padding: 20px;
+  padding: 10px;
 }
 button {
   cursor: pointer;

@@ -1,2 +1,0 @@
-"use strict";(self["webpackChunkmylog"]=self["webpackChunkmylog"]||[]).push([[845],{4845:function(e,n,u){u.r(n),u.d(n,{default:function(){return c}});var a=u(3396),r=u(7139);function t(e,n,u,t,o,s){return(0,a.wg)(),(0,a.iD)("div",null,"PageNotFound : "+(0,r.zw)(o.message),1)}var o={name:"PageNotFound",data(){return{message:"Hello Vue"}}},s=u(89);const l=(0,s.Z)(o,[["render",t]]);var c=l}}]);
-//# sourceMappingURL=845.d87abc24.js.map
