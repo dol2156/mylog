@@ -1,8 +1,8 @@
 <template>
   <form id="myForm" @submit.prevent="onSubmit">
-    <input class="form_el" type="text" name="name" placeholder="PASSWORD"
+    <input class="form_el" type="password" name="name" placeholder="PASSWORD"
            maxlength="6" pattern="^[0-9]+$"
-           style="-webkit-text-security: disc;" v-model="this.password"/>
+           v-model="this.password"/>
     <button class="form_el login_btn" type="submit">LOGIN</button>
   </form>
 </template>

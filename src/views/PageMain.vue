@@ -10,7 +10,7 @@
     </button>
   </div>
   <ul class="webtoon_list">
-    <li v-for="(item, idx) in webtoon_list" :key="item.id" :data-idx="idx">
+    <li :ref="setitemRef" v-for="(item, idx) in webtoon_list" :key="item.id" :data-idx="idx">
       <button class="삭제" type="button"
               @click="onRemoveWebToonItem(item)"
       >삭제
@@ -43,6 +43,7 @@ export default {
       message : "Hello Vue",
       webtoon_list : [],
       create_webtoon_title : "",
+      itemRefs : [],
     };
   },
   created() {
@@ -54,6 +55,10 @@ export default {
     this.readWebToonItem();
   },
   methods : {
+    setitemRef(el) {
+      this.itemRefs.push(el);
+    },
+    
     makeWebToonObj(제목, 회차) {
       const obj = {
         제목,
@@ -110,7 +115,7 @@ export default {
     }
     ,
     
-    updateWebToonItem(item) {
+    updateWebToonItem(item, callback) {
       
       const id = item.id;
       const 회차 = item.회차;
@@ -120,6 +125,7 @@ export default {
       })
         .then(() => {
           this.readWebToonItem();
+          callback();
         })
         .catch((error) => {
           // error
@@ -159,8 +165,14 @@ export default {
     ,
     
     onSaveClick(item) {
+      console.log(item);
       
-      this.updateWebToonItem(item);
+      const btn = event.target;
+      btn.classList.add('disabled');
+      
+      this.updateWebToonItem(item, () => {
+        btn.classList.remove('disabled');
+      });
       
       /*
       const ref = doc(db, collectionName, id);
@@ -238,12 +250,20 @@ $FORM_EL_SIZE:50px;
       text-align:center;
       border:none;
       border-left:1px solid #dddddd;
+      -webkit-appearance:none;
+      -moz-appearance:textfield;
     }
     
     > .저장{
       width:$FORM_EL_SIZE; min-width:$FORM_EL_SIZE;
       background-color:dodgerblue;
       color:white;
+      
+      &.disabled{
+        pointer-events:none;
+        background-color:black;
+        opacity:0.2;
+      }
     }
   }
 }
