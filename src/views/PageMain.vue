@@ -74,7 +74,12 @@ export default {
             arr.push(data);
             //console.log(`${doc.id} => ${doc.data()}`);
           });
-          console.log(arr);
+          
+          arr.sort(function (a, b) {
+            return a.제목 < b.제목 ? -1 : a.제목 > b.제목 ? 1 : 0;// 한글 오름 차순
+            // return a.제목 > b.제목 ? -1 : a.제목 < b.제목 ? 1 : 0;// 한글 내림 차순
+          });
+          
           this.webtoon_list = arr;
         })
         .catch((error) => {
@@ -102,7 +107,8 @@ export default {
         .then(() => {
           // complete
         });
-    },
+    }
+    ,
     
     updateWebToonItem(item) {
       
@@ -122,15 +128,17 @@ export default {
         .then(() => {
           // complete
         });
-    },
+    }
+    ,
     
     onCreateWebToonItem() {
       const title = this.create_webtoon_title.trim();
       this.createWebToonItem(title);
-    },
+    }
+    ,
     
     onRemoveWebToonItem(item) {
-      if(!window.confirm('삭제?')) return;
+      if (!window.confirm('삭제?')) return;
       
       const id = item.id;
       // eslint-disable-next-line no-unreachable
@@ -147,7 +155,8 @@ export default {
         .then(() => {
           // complete
         });
-    },
+    }
+    ,
     
     onSaveClick(item) {
       
@@ -166,7 +175,8 @@ export default {
           // complete
         });
        */
-    },
+    }
+    ,
   },
 }
 </script>
