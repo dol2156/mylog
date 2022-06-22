@@ -1,8 +1,11 @@
 <template>
   <header>
     <select class="collection_select" @change="onCollectionChange" v-model="this.collection_name">
-      <option value="webtoon">webtoon</option>
-      <option value="webtoon_19">webtoon_19</option>
+      <option value="webtoon">웹툰</option>
+      <option value="webtoon_19">웹툰 19</option>
+      <option value="animation">애니메이션</option>
+      <option value="movie">영화</option>
+      <option value="drama">드라마</option>
     </select>
     <input class="search_inp" type="search" placeholder="search..." @input="onSearchInput" />
   </header>
@@ -55,6 +58,8 @@ export default {
     // Initialize Firebase
     app = this.$_Firebase;
     db = getFirestore(app);
+    console.log(db);
+
     this.readWebToonItem();
   },
   methods: {
