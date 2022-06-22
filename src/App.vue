@@ -14,5 +14,7 @@ export default {
 </script>
 <style lang="scss">
 *{ box-sizing:border-box; }
+body{ background-color:#ffffd4; }
+#app{ padding:20px; }
 button{ cursor:pointer; }
 </style>
