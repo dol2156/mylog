@@ -42,7 +42,7 @@ export default {
       webtoon_list: [],
       create_webtoon_title: "",
       itemRefs: [],
-      user_id: "dol2156@gmail.com",
+      user_id: "",
       key_list: [],
       key: "webtoon",
     };
@@ -50,6 +50,7 @@ export default {
   created() {
     console.log("created");
     if (this.$route.params.key) this.key = this.$route.params.key;
+    this.user_id = this.$cookies.get("user_id");
 
     // Initialize Firebase
     app = this.$_Firebase;

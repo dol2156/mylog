@@ -3,6 +3,7 @@
     <div style="margin-bottom: 20px">
       <img style="width: 200px" src="@/assets/logo.png" alt="" />
     </div>
+    <input class="form_el id_input" type="email" placeholder="ID" v-model="this.email" />
     <input class="form_el pw_input" type="password" inputmode="numeric" placeholder="PASSWORD" maxlength="6" pattern="^[0-9]+$" v-model="this.password" @input="maxLengthCheck" />
     <button class="form_el login_btn" type="submit">LOGIN</button>
   </form>
@@ -15,6 +16,7 @@ export default {
   data() {
     return {
       message: "Hello Vue",
+      email: "",
       password: "",
     };
   },
@@ -29,17 +31,16 @@ export default {
     onSubmit() {
       console.log(event);
       const auth = getAuth();
-      signInWithEmailAndPassword(auth, "dol2156@gmail.com", this.password)
+      signInWithEmailAndPassword(auth, this.email, this.password)
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
           const email = user.email;
           //const accessToken = user.accessToken;
-          if (email === "dol2156@gmail.com") {
-            // 로그인 성공
-            this.$cookies.set("user_id", email, "7d");
-            this.$router.push("/main");
-          }
+
+          // 로그인 성공
+          this.$cookies.set("user_id", email, "7d");
+          this.$router.push("/main");
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -87,6 +88,7 @@ $FORM_EL_HEI: 55px;
     }
   }
 
+  .id_input,
   .pw_input {
     width: 300px;
     margin: 0 auto;
