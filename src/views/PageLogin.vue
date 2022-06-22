@@ -3,7 +3,7 @@
     <input class="form_el" type="text" name="name" placeholder="PASSWORD"
            maxlength="6" pattern="^[0-9]+$"
            style="-webkit-text-security: disc;" v-model="this.password"/>
-    <button class="form_el" type="submit">LOGIN</button>
+    <button class="form_el login_btn" type="submit">LOGIN</button>
   </form>
 </template>
 <script>
@@ -48,12 +48,14 @@ export default {
 $FORM_EL_HEI:55px;
 #myForm{
   outline:1px dashed red; box-shadow:0px 0px 10px cornflowerblue;
-  z-index:0; position:absolute; top:0px; left:0px;
+  z-index:0; position:fixed; top:0px; left:0px;
   width:100%; height:100%; padding:10px;
   background-color:#333333;
   display:flex; flex-direction:column; align-items:center; justify-content:center;
   
   .form_el{
+    position:relative;
+    z-index:5;
     display:block;
     width:100%; height:$FORM_EL_HEI; padding:0 10px;
     border:1px solid #333333;
@@ -63,5 +65,7 @@ $FORM_EL_HEI:55px;
       margin-top:10px;
     }
   }
+  
+  .login_btn{ background-color:gold; font-weight:700; }
 }
 </style>
