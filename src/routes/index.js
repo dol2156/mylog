@@ -1,4 +1,6 @@
-import { createRouter, createWebHashHistory } from "vue-router";
+import { createRouter } from "vue-router";
+import { createWebHashHistory } from "vue-router";
+//import { createWebHistory } from "vue-router";
 
 import PageMain from "@/views/PageMain";
 import PageLogin from "@/views/PageLogin";
@@ -47,9 +49,8 @@ const routes = [
 ];
 
 const router = createRouter({
-  //history : createWebHistory(),// 해시 제거를 위해 히스토리 모드 사용
-  // history:createWebHashHistory(),
   history: createWebHashHistory(),
+  //history : createWebHistory(),// 해시 제거를 위해 히스토리 모드 사용
   routes,
 });
 
