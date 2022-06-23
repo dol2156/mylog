@@ -61,8 +61,6 @@ export default {
     if (this.$route.params.key) this.key = this.$route.params.key;
     this.user_id = this.$cookies.get("user_id");
 
-    this.$_LoginCheck.check();
-
     if (!this.user_id) {
       //alert("user_id is null");
       return;
@@ -96,6 +94,10 @@ export default {
             // console.log(`${doc.id} => ${doc.data()}`);
             // console.log(doc.data());
           });
+          
+          // 키없으면 키추가 페이지로 이동
+          if(arr.length == 0) this.$router.push('/addKey');
+          
           this.key_list = arr;
           this.readWebToonItem();
         })

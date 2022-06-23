@@ -3,8 +3,13 @@
     <div style="margin-bottom: 20px">
       <img style="width: 200px" src="@/assets/logo.png" alt="" />
     </div>
-    <input class="form_el id_input" type="email" placeholder="ID" v-model="this.email" />
-    <input class="form_el pw_input" type="password" inputmode="numeric" placeholder="PASSWORD" maxlength="6" pattern="^[0-9]+$" v-model="this.password" @input="maxLengthCheck" />
+    <input class="form_el id_input" type="email" placeholder="ID"
+           required
+           v-model="this.email" />
+    <input class="form_el pw_input" type="password" inputmode="numeric" placeholder="PIN 숫자 6자리"
+           required minlength="6" maxlength="6" pattern="^[0-9]+$"
+           v-model="this.password"
+           @input="maxLengthCheck" />
     <button class="form_el login_btn" type="submit">LOGIN</button>
     <router-link to="/join" class="form_el join_btn">JOIN</router-link>
   </form>
