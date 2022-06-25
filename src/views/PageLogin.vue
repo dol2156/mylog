@@ -11,7 +11,7 @@
            v-model="this.password"
            @input="maxLengthCheck" />
     <button class="form_el login_btn" type="submit">LOGIN</button>
-    <router-link to="/join" class="form_el join_btn">JOIN</router-link>
+    <!--<router-link to="/join" class="form_el join_btn">JOIN</router-link>-->
   </form>
 </template>
 <script>

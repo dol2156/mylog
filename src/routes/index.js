@@ -4,7 +4,7 @@ import { createWebHashHistory } from "vue-router";
 
 import PageMain from "@/views/PageMain";
 import PageLogin from "@/views/PageLogin";
-import PageJoin from "@/views/PageJoin";
+// import PageJoin from "@/views/PageJoin";
 import PageAddKey from "@/views/PageAddKey";
 
 const routes = [
@@ -27,25 +27,25 @@ const routes = [
     name: "로그인",
     component: PageLogin,
   },
-  {
-    path: "/join",
-    name: "회원가입",
-    component: PageJoin,
-  },
+  // {
+  //   path: "/join",
+  //   name: "회원가입",
+  //   component: PageJoin,
+  // },
   {
     path: "/addKey",
     name: "키추가",
     component: PageAddKey,
   },
-  // {
-  //   path: "/404",
-  //   name: "PageNotFound",
-  //   component: () => import('@/views/PageNotFound'),// 코드 스플리팅 - SPA 방식에서 오직 한페이지에 필요한 리소스만 필요한 경우 사용
-  // },
-  // {
-  //   path: "/:catchAll(.*)",
-  //   redirect: '/404',
-  // }
+  {
+    path: "/404",
+    name: "PageNotFound",
+    component: () => import('@/views/PageNotFound'),// 코드 스플리팅 - SPA 방식에서 오직 한페이지에 필요한 리소스만 필요한 경우 사용
+  },
+  {
+    path: "/:catchAll(.*)",
+    redirect: '/404',
+  }
 ];
 
 const router = createRouter({

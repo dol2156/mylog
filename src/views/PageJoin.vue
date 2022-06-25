@@ -32,6 +32,7 @@ export default {
       }
     },
     onSubmit() {
+      
       const auth = getAuth();
       const email = this.id;
       const password = this.pw;
