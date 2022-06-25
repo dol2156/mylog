@@ -11,6 +11,12 @@
         <button class="menu_btn" @click="onMenuBtnClick">메뉴</button>
       </article>
       <article class="menu_atc">
+        <div class="create_webtoon_item_box">
+          <input type="text" placeholder="제목 입력" v-model="this.create_webtoon_title" @keyup.enter="onCreateWebToonItem" />
+          <button class="create_btn" type="button" @click="onCreateWebToonItem">추가</button>
+        </div>
+      </article>
+      <article class="menu_atc">
         <router-link to="/addKey" class="add_key_btn">카테고리 추가</router-link>
         <button class="logout_btn" @click="onLogoutClick">로그아웃</button>
       </article>
@@ -27,12 +33,6 @@
       <button class="저장" type="button" @click="onSaveClick(item)">저장</button>
     </li>
   </ul>
-  <footer>
-    <div class="create_webtoon_item_box">
-      <input type="text" placeholder="제목 입력" v-model="this.create_webtoon_title" @keyup.enter="onCreateWebToonItem" />
-      <button class="create_btn" type="button" @click="onCreateWebToonItem">추가</button>
-    </div>
-  </footer>
 </template>
 <script>
 import { getFirestore } from "firebase/firestore";
@@ -94,10 +94,10 @@ export default {
             // console.log(`${doc.id} => ${doc.data()}`);
             // console.log(doc.data());
           });
-          
+
           // 키없으면 키추가 페이지로 이동
-          if(arr.length == 0) this.$router.push('/addKey');
-          
+          if (arr.length == 0) this.$router.push("/addKey");
+
           this.key_list = arr;
           this.readWebToonItem();
         })

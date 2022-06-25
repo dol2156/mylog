@@ -6,7 +6,7 @@ header {
   margin-bottom: 20px;
 
   &.open {
-    height: 105px;
+    height: 155px;
 
     .menu_atc {
       display: flex;
@@ -82,6 +82,32 @@ header {
         font-weight: 900;
         padding: 0 10px;
       }
+    }
+  }
+
+  .create_webtoon_item_box {
+    background-color: #333;
+
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 5px;
+    width: 100%;
+
+    > input {
+      display: block;
+      font-size: 16px;
+      width: 100%;
+      height: $FORM_EL_SIZE;
+      padding: 0 10px;
+    }
+
+    > .create_btn {
+      min-width: $FORM_EL_SIZE;
+      width: $FORM_EL_SIZE;
+      height: $FORM_EL_SIZE;
+      background-color: green;
+      color: white;
     }
   }
 }
@@ -165,33 +191,4 @@ header {
 
 footer {
   height: 100px;
-  .create_webtoon_item_box {
-    padding: 10px;
-    background-color: #333;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-
-    display: flex;
-    flex-wrap: nowrap;
-    align-items: center;
-    gap: 5px;
-
-    > input {
-      display: block;
-      font-size: 16px;
-      width: 100%;
-      height: $FORM_EL_SIZE;
-      padding: 0 10px;
-    }
-
-    > .create_btn {
-      min-width: $FORM_EL_SIZE;
-      width: $FORM_EL_SIZE;
-      height: $FORM_EL_SIZE;
-      background-color: green;
-      color: white;
-    }
-  }
 }
