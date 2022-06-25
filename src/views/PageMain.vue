@@ -33,10 +33,12 @@
       <button class="저장" type="button" @click="onSaveClick(item)">저장</button>
     </li>
   </ul>
+  <CompNumPad></CompNumPad>
 </template>
 <script>
 import { getFirestore } from "firebase/firestore";
 import { collection, doc, getDocs, addDoc, updateDoc, deleteDoc } from "firebase/firestore";
+import CompNumPad from "@/components/CompNumPad.vue";
 
 let app, db;
 
@@ -54,6 +56,9 @@ export default {
       menu_open: false,
     };
   },
+  components: {
+    CompNumPad,
+  },
   created() {
     console.log("created");
     this.$_LoginCheck.check();
@@ -69,7 +74,7 @@ export default {
     // Initialize Firebase
     app = this.$_Firebase;
     db = getFirestore(app);
-    this.loadCollectionList();
+    //this.loadCollectionList();
   },
   computed: {
     getListPath() {
