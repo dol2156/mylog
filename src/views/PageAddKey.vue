@@ -1,9 +1,9 @@
 <template>
   <main>
     <label>카테고리 영문명</label>
-    <input class="form_el" type="text" placeholder="webtoon" v-model="this.key" />
+    <input class="form_el" type="text" placeholder="영문 카테고리 키값" v-model="this.key" />
     <label>카테고리 한글명</label>
-    <input class="form_el" type="text" placeholder="웹툰" v-model="this.key_name" />
+    <input class="form_el" type="text" placeholder="한글 카테고리 이름" v-model="this.key_name" />
     <button class="form_el add_btn" @click="onAddKey">추가</button>
   </main>
 </template>
@@ -25,10 +25,9 @@ export default {
   },
   created() {
     console.log("created");
-    
+
     if (this.$route.params.key) this.key = this.$route.params.key;
     this.user_id = this.$cookies.get("user_id");
-  
 
     // Initialize Firebase
     app = this.$_Firebase;
@@ -98,9 +97,9 @@ $FORM_EL_SIZE: 50px;
   display: block;
   height: $FORM_EL_SIZE;
   padding: 0 10px;
-  
-  + label{
-    margin-top:10px;
+
+  + label {
+    margin-top: 10px;
   }
 }
 .add_btn {
@@ -111,8 +110,8 @@ $FORM_EL_SIZE: 50px;
   font-weight: 900;
 }
 
-label{
-  font-weight:900;
-  margin-bottom:5px;
+label {
+  font-weight: 900;
+  margin-bottom: 5px;
 }
 </style>

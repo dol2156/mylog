@@ -1,6 +1,23 @@
 <template>
   <header v-bind:class="{ open: this.menu_open }">
     <section>
+      <article class="menu_atc">
+        <div class="create_webtoon_item_box">
+          <input type="text" placeholder="TITLE" v-model="this.domain_num" @keyup.enter="onUpdateDNum" />
+          <button class="domain_num_save_btn" type="button" @click="onUpdateDNum">저장</button>
+        </div>
+      </article>
+      <article class="menu_atc">
+        <div class="create_webtoon_item_box">
+          <input type="text" placeholder="TITLE" v-model="this.create_webtoon_title" @keyup.enter="onCreateWebToonItem" />
+          <input type="text" placeholder="KEY" v-model="this.create_webtoon_key" @keyup.enter="onCreateWebToonItem" />
+          <button class="create_btn" type="button" @click="onCreateWebToonItem">추가</button>
+        </div>
+      </article>
+      <article class="menu_atc">
+        <router-link to="/addKey" class="add_key_btn">카테고리 추가</router-link>
+        <button class="logout_btn" @click="onLogoutClick">로그아웃</button>
+      </article>
       <article>
         <input class="search_inp" type="search" placeholder="search..." @input="onSearchInput" />
         <select class="collection_select" @change="onCollectionChange" v-model="this.key">
@@ -10,27 +27,17 @@
         </select>
         <button class="menu_btn" @click="onMenuBtnClick">메뉴</button>
       </article>
-      <article class="menu_atc">
-        <div class="create_webtoon_item_box">
-          <input type="text" placeholder="제목 입력" v-model="this.create_webtoon_title" @keyup.enter="onCreateWebToonItem" />
-          <button class="create_btn" type="button" @click="onCreateWebToonItem">추가</button>
-        </div>
-      </article>
-      <article class="menu_atc">
-        <router-link to="/addKey" class="add_key_btn">카테고리 추가</router-link>
-        <button class="logout_btn" @click="onLogoutClick">로그아웃</button>
-      </article>
     </section>
   </header>
   <ul class="webtoon_list">
     <li v-bind:class="{ hidden: item.visible === false }" :ref="setitemRef" v-for="(item, idx) in webtoon_list" :key="item.id" :data-idx="idx">
       <button class="삭제" type="button" @click="onRemoveWebToonItem(item)">삭제</button>
-      <div class="제목">
-        <div class="text_0">{{ item.id }}</div>
+      <button class="저장" type="button" @click="updateItemKey(item)">KEY</button>
+      <a class="제목" @click.prevent="onItemClick(item)">
+        <div class="text_0">{{ item.key }}</div>
         <div class="text_1">{{ item.title }}</div>
-      </div>
-      <input class="회차" type="number" readonly v-model="item.ep_num" @click.prevent="onEpClick(item)" />
-      <!-- <button class="저장" type="button" @click="onSaveClick(item)">저장</button> -->
+      </a>
+      <input class="회차" type="text" readonly v-model="item.ep_num" @click.prevent="onEpClick(item)" />
     </li>
   </ul>
   <CompNumPad v-if="modal_CompNumPad" @closeCompNumPad="closeCompNumPad"></CompNumPad>
@@ -41,7 +48,7 @@ import { collection, doc, getDocs, addDoc, updateDoc, deleteDoc } from "firebase
 import CompNumPad from "@/components/CompNumPad.vue";
 
 let app, db;
-
+//https://blacktoon180.com/webtoon/4117.html
 export default {
   name: "PageMain",
   data() {
@@ -49,19 +56,21 @@ export default {
       message: "Hello Vue",
       webtoon_list: [],
       create_webtoon_title: "",
+      create_webtoon_key: "",
       itemRefs: [],
       user_id: "",
       key_list: [],
       key: "webtoon",
       menu_open: false,
       modal_CompNumPad: false,
+      domain_num: "",
     };
   },
   components: {
     CompNumPad,
   },
   created() {
-    console.log("created");
+    //console.log("created");
     this.$_LoginCheck.check();
 
     if (this.$route.params.key) this.key = this.$route.params.key;
@@ -86,6 +95,15 @@ export default {
     setitemRef(el) {
       this.itemRefs.push(el);
     },
+    getItemUrl(key) {
+      if (key) {
+        const url = `https://blacktoon${this.domain_num}.com/webtoon/${key}.html`;
+        return url;
+      } else {
+        return false;
+      }
+    },
+
     loadCollectionList() {
       getDocs(collection(db, this.user_id))
         .then((response) => {
@@ -93,12 +111,16 @@ export default {
           // console.log(response);
           let arr = [];
           response.forEach((doc) => {
-            arr.push({
-              key: doc.id,
-              name: doc.data().name,
-            });
+            if (doc.data().name) {
+              arr.push({
+                key: doc.id,
+                name: doc.data().name,
+              });
+            }
             // console.log(`${doc.id} => ${doc.data()}`);
-            // console.log(doc.data());
+            if (doc.id === "domain") {
+              this.domain_num = doc.data().num;
+            }
           });
 
           // 키없으면 키추가 페이지로 이동
@@ -115,10 +137,11 @@ export default {
           // complete
         });
     },
-    makeWebToonObj(title, ep_num) {
+    makeWebToonObj(title, ep_num, key = "") {
       const obj = {
         title,
         ep_num,
+        key,
       };
       return obj;
     },
@@ -151,8 +174,8 @@ export default {
           // complete
         });
     },
-    createWebToonItem(title) {
-      addDoc(collection(db, this.getListPath), this.makeWebToonObj(title, 0))
+    createWebToonItem(title, key) {
+      addDoc(collection(db, this.getListPath), this.makeWebToonObj(title, 0, key))
         .then((response) => {
           // success
           console.log(response);
@@ -186,6 +209,23 @@ export default {
           // complete
         });
     },
+    onUpdateDNum() {
+      const ref = doc(db, this.user_id, "domain");
+      updateDoc(ref, {
+        num: this.domain_num,
+      })
+        .then(() => {
+          //console.log("success");
+        })
+        .catch((error) => {
+          // error
+          console.log(error);
+        })
+        .then(() => {
+          // complete
+        });
+    },
+
     onMenuBtnClick() {
       this.menu_open = !this.menu_open;
     },
@@ -215,7 +255,8 @@ export default {
     onCreateWebToonItem() {
       const title = this.create_webtoon_title.trim();
       if (!title) return;
-      this.createWebToonItem(title);
+      const key = this.create_webtoon_key.trim();
+      this.createWebToonItem(title, key);
     },
     onRemoveWebToonItem(item) {
       if (!window.confirm("삭제?")) return;
@@ -261,6 +302,36 @@ export default {
       this.modal_CompNumPad = true;
       this.$_Store.selected_item = item;
       console.log(this.$_Store.selected_item.ep_num);
+    },
+
+    updateItemKey(item) {
+      const id = item.id;
+      const key = window.prompt("KEY?");
+      if (key) {
+        const ref = doc(db, this.getListPath, id);
+
+        updateDoc(ref, {
+          key,
+        })
+          .then(() => {
+            console.log("success");
+            this.readWebToonItem();
+          })
+          .catch((error) => {
+            // error
+            console.log(error);
+          })
+          .then(() => {
+            // complete
+          });
+      }
+    },
+
+    onItemClick(item) {
+      const url = this.getItemUrl(item.key);
+      if (url) {
+        window.open(url);
+      }
     },
 
     closeCompNumPad() {
