@@ -29,11 +29,11 @@
         <div class="text_0">{{ item.id }}</div>
         <div class="text_1">{{ item.title }}</div>
       </div>
-      <input class="회차" type="number" v-model="item.ep_num" onclick="this.select();" />
-      <button class="저장" type="button" @click="onSaveClick(item)">저장</button>
+      <input class="회차" type="number" readonly v-model="item.ep_num" @click.prevent="onEpClick(item)" />
+      <!-- <button class="저장" type="button" @click="onSaveClick(item)">저장</button> -->
     </li>
   </ul>
-  <CompNumPad></CompNumPad>
+  <CompNumPad v-if="modal_CompNumPad" @closeCompNumPad="closeCompNumPad"></CompNumPad>
 </template>
 <script>
 import { getFirestore } from "firebase/firestore";
@@ -54,6 +54,7 @@ export default {
       key_list: [],
       key: "webtoon",
       menu_open: false,
+      modal_CompNumPad: false,
     };
   },
   components: {
@@ -74,7 +75,7 @@ export default {
     // Initialize Firebase
     app = this.$_Firebase;
     db = getFirestore(app);
-    //this.loadCollectionList();
+    this.loadCollectionList();
   },
   computed: {
     getListPath() {
@@ -254,6 +255,17 @@ export default {
                 // complete
               });
              */
+    },
+
+    onEpClick(item) {
+      this.modal_CompNumPad = true;
+      this.$_Store.selected_item = item;
+      console.log(this.$_Store.selected_item.ep_num);
+    },
+
+    closeCompNumPad() {
+      this.modal_CompNumPad = false;
+      this.onSaveClick(this.$_Store.selected_item);
     },
   },
 };

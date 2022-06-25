@@ -137,7 +137,7 @@ header.open {
 
     > .제목 {
       padding: 0 5px;
-      width: calc(100% - 50px * 3);
+      width: calc(100% - 50px * 2);
       display: flex;
       align-items: flex-start;
       flex-direction: column;
@@ -164,6 +164,9 @@ header.open {
     }
 
     > .회차 {
+      background-color: white;
+      color: black;
+      cursor: pointer;
       width: $FORM_EL_SIZE;
       min-width: $FORM_EL_SIZE;
       text-align: center;
