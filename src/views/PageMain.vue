@@ -1,6 +1,15 @@
 <template>
-  <header v-bind:class="{ open: this.menu_open }">
-    <section>
+  <header v-bind:class="{ open: this.menu_open }" :style="{ height: this.header_height + 'px' }">
+    <section ref="section">
+      <article>
+        <input class="search_inp" type="search" placeholder="search..." @input="onSearchInput" />
+        <select class="collection_select" @change="onCollectionChange" v-model="this.key">
+          <option v-for="(item, idx) in this.key_list" :key="item.id" :data-idx="idx" :value="item.key">
+            {{ item.name }}
+          </option>
+        </select>
+        <button class="menu_btn" @click="onMenuBtnClick">메뉴</button>
+      </article>
       <article class="menu_atc">
         <div class="create_webtoon_item_box">
           <input type="text" placeholder="TITLE" v-model="this.domain_num" @keyup.enter="onUpdateDNum" />
@@ -17,15 +26,6 @@
       <article class="menu_atc">
         <router-link to="/addKey" class="add_key_btn">카테고리 추가</router-link>
         <button class="logout_btn" @click="onLogoutClick">로그아웃</button>
-      </article>
-      <article>
-        <input class="search_inp" type="search" placeholder="search..." @input="onSearchInput" />
-        <select class="collection_select" @change="onCollectionChange" v-model="this.key">
-          <option v-for="(item, idx) in this.key_list" :key="item.id" :data-idx="idx" :value="item.key">
-            {{ item.name }}
-          </option>
-        </select>
-        <button class="menu_btn" @click="onMenuBtnClick">메뉴</button>
       </article>
     </section>
   </header>
@@ -64,6 +64,7 @@ export default {
       menu_open: false,
       modal_CompNumPad: false,
       domain_num: "",
+      header_height: 0,
     };
   },
   components: {
@@ -86,12 +87,23 @@ export default {
     db = getFirestore(app);
     this.loadCollectionList();
   },
+
+  mounted() {
+    this.updateHeaderHei();
+  },
+  updated() {
+    this.updateHeaderHei();
+  },
   computed: {
     getListPath() {
       return this.user_id + "/" + this.key + "/list";
     },
   },
   methods: {
+    updateHeaderHei() {
+      this.header_height = this.$refs.section.clientHeight - 20;
+    },
+
     setitemRef(el) {
       this.itemRefs.push(el);
     },
@@ -181,6 +193,7 @@ export default {
           console.log(response);
           this.readWebToonItem();
           this.create_webtoon_title = "";
+          this.create_webtoon_key = "";
         })
         .catch((error) => {
           // error
@@ -331,6 +344,8 @@ export default {
       const url = this.getItemUrl(item.key);
       if (url) {
         window.open(url);
+      } else {
+        this.updateItemKey(item);
       }
     },
 

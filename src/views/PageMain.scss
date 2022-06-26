@@ -1,6 +1,7 @@
 $FORM_EL_SIZE: 50px;
 
 header {
+  outline: 1px solid red;
   position: relative;
   height: 50px;
   margin-bottom: 20px;
@@ -116,7 +117,6 @@ header {
 }
 
 header.open {
-  height: 155px;
   .menu_atc {
     display: flex;
   }
