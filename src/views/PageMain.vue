@@ -62,7 +62,7 @@ export default {
       key_list: [],
       key: "webtoon",
       menu_open: false,
-      modal_CompNumPad: true,
+      modal_CompNumPad: false,
       domain_num: "",
       header_height: 0,
     };

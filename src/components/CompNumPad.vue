@@ -3,7 +3,7 @@
     <!-- <div v-if="$_Store.selected_item">{{ $_Store.selected_item.ep_num }}</div> -->
     <div class="bg" @click="closeCompNumPad"></div>
     <article class="num_list">
-      <div>dddd</div>
+      <div class="num_board">{{ number }}</div>
       <div class="button_wrap">
         <button v-for="(item, index) in num_list" :key="index" :data-num="item" @click="onNumClick">
           {{ item }}
@@ -71,6 +71,13 @@ export default {
     width: calc(100% - 20px);
     position: relative;
     z-index: 10;
+    
+    > .num_board{
+      background-color:white;
+      text-align:center;
+      line-height:30px; height:30px;
+      font-weight:600;
+    }
     
     > .button_wrap{
       background-color: skyblue;
