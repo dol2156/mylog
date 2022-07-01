@@ -3,9 +3,12 @@
     <!-- <div v-if="$_Store.selected_item">{{ $_Store.selected_item.ep_num }}</div> -->
     <div class="bg" @click="closeCompNumPad"></div>
     <article class="num_list">
-      <button v-for="(item, index) in num_list" :key="index" :data-num="item" @click="onNumClick">
-        {{ item }}
-      </button>
+      <div>dddd</div>
+      <div class="button_wrap">
+        <button v-for="(item, index) in num_list" :key="index" :data-num="item" @click="onNumClick">
+          {{ item }}
+        </button>
+      </div>
     </article>
   </div>
 </template>
@@ -65,27 +68,33 @@ export default {
   }
 
   .num_list {
-    background-color: skyblue;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 5px;
-    box-sizing: border-box;
-    padding: 10px;
+    width: calc(100% - 20px);
     position: relative;
     z-index: 10;
-    width: calc(100% - 20px);
-
-    > button {
-      background-color: rgba(0, 0, 0, 0.05);
-      color: black;
-      height: 58px;
-      font-weight: 900;
-      color: white;
+    
+    > .button_wrap{
+      background-color: skyblue;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 5px;
+      box-sizing: border-box;
+      padding: 10px;
+      
+      
+      
+      > button {
+        background-color: rgba(0, 0, 0, 0.05);
+        color: black;
+        height: 58px;
+        font-weight: 900;
+        color: white;
+      }
+      > button:active {
+        background-color: white;
+        color: skyblue;
+      }
     }
-    > button:active {
-      background-color: white;
-      color: skyblue;
-    }
+    
   }
 }
 </style>
