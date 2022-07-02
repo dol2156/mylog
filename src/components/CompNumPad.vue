@@ -19,7 +19,7 @@ export default {
   data() {
     return {
       message: "Hello",
-      number: "",
+      number: "NUMBER",
       num_list: [1, 2, 3, 4, 5, 6, 7, 8, 9, "RESET", 0, "DEL"],
     };
   },
@@ -73,10 +73,12 @@ export default {
     z-index: 10;
     
     > .num_board{
-      background-color:white;
+      background-color:skyblue;
       text-align:center;
       line-height:30px; height:30px;
       font-weight:600;
+      font-size:30px;
+      color:white;
     }
     
     > .button_wrap{
