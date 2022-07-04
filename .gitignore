@@ -21,3 +21,16 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+/src/
+/public/
+/.firebaserc
+/babel.config.js
+/firebase.json
+/firebase-debug.log
+/firestore.indexes.json
+/firestore.rules
+/jsconfig.json
+/package.json
+/package-lock.json
+/README.md
+/vue.config.js
