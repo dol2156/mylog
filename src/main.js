@@ -9,12 +9,12 @@ import { createPinia } from 'pinia';
 import { useCommonStore } from "@/stores/common";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyARebWmpXUwkBpidtlVaYpWRPCv-fUzOYw",
+  apiKey: process.env.VUE_APP_API_KEY,
   authDomain: "mylog-c26f1.firebaseapp.com",
   projectId: "mylog-c26f1",
   storageBucket: "mylog-c26f1.appspot.com",
   messagingSenderId: "673156150443",
-  appId: "1:673156150443:web:3bb00fd05d921c6d3ef3ee"
+  appId: process.env.VUE_APP_APP_ID,
 };
 
 const app = createApp(App);
